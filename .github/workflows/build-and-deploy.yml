@@ -50,7 +50,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy to Azure Web App
-        uses: azure/deploy-webapp@v1
+        uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.APP_NAME }}
           package: ./out
