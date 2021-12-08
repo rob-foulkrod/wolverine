@@ -27,7 +27,7 @@ jobs:
           dotnet publish -c Release --no-restore -o ./out
 
       - name: Upload Artifact
-      - uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v1
         with:
           name: webapp
           path: ./out
