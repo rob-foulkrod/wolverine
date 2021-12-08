@@ -6,6 +6,7 @@ on:
 
 env:
   DOTNET_VERSION: "6.0.x"
+  APP_NAME: "wolverine-gh"
 
 jobs:
   build:
@@ -31,3 +32,24 @@ jobs:
         with:
           name: webapp
           path: ./out
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: webapp
+          path: ./out
+
+      - name: Authenticate Az Cli
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/deploy-webapp@v1
+        with:
+          app-name: ${{ env.APP_NAME }}
+          package: ./out
